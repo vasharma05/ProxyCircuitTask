@@ -1,7 +1,11 @@
 const user = {
     authError: null,
-    isAuthenticated: false,
-    user: null
+    isAuthenticated: true,
+    user: {
+        name: 'Vineet Sharma',
+        email: 'sharmava05@gmail.com',
+        password: 'Vin1234' 
+    }
 }
 const initState = {
     users:[
@@ -41,6 +45,8 @@ const authReducer = (state=user, action) => {
         case 'LOGOUT_USER':
             state.user = null
             state.isAuthenticated = false 
+            // state.history.push('/')
+            console.log('sdsd')
             return state
         default:
             break

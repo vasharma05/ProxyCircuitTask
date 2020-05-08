@@ -13,9 +13,9 @@ export class Todo extends Component {
         this.setState({
             checked: e.target.checked,
         })
-        console.log(this.props.id, !this.state.checked);
+        console.log(this.props.id, !this.state.checked, this.props.user.email);
         
-        this.props.completed(this.props.id, !this.state.checked)
+        this.props.completed(this.props.id, !this.state.checked,this.props.user.email)
     }
     render() {
         console.log(this.props.id)
@@ -32,7 +32,7 @@ export class Todo extends Component {
 
 const mapDispatchToProps = (dispatch)=>{
     return {
-        completed: (id,completed) => dispatch({type:'COMPLETED', id,completed})
+        completed: (id,completed, email) => dispatch({type:'COMPLETED', id,completed, email})
     }
 }
 

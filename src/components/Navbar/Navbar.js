@@ -13,7 +13,7 @@ export class Navbar extends Component {
             <div className='container'>
                 <Link to='/' className='brand-logo'>ToDo App</Link>
                 <ul className='right'>
-                    { this.props.user.isAuthenticated ? <SignedInLinks /> :  <SignedOutLinks />}
+                    { this.props.user.isAuthenticated ? <SignedInLinks logout={this.props.logout} user={this.props.user.user}   /> :  <SignedOutLinks />}
                 </ul>
             </div>
         </nav>
@@ -25,6 +25,12 @@ const mapStateToProps= (state) =>{
         user: state.auth
     }
 }
+
+const mapDispatchToProps = (dispatch)=>{
+    return{
+        logout:()=> dispatch({type: 'LOGOUT_USER'})
+    }
+}
   
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

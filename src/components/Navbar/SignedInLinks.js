@@ -1,12 +1,25 @@
 import React, { Component, Fragment } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 export class SignedInLinks extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            redirect:false
+        }
+    }
+    logout(){
+        this.props.logout()
+        this.setState({
+            redirect:true
+        })
+    }
     render() {
         return (
             <Fragment>
-                <li><NavLink to='/'>Heyy</NavLink></li>
-                <li><NavLink to='/' >Log Out</NavLink> </li>
+            {this.state.redirect ? <Redirect to='/' />: null}
+                <li><NavLink to='/'>{this.props.user.name}</NavLink></li>
+                <li><p onClick={this.logout.bind(this)}>Log Out</p> </li>
             </Fragment>
         )
     }

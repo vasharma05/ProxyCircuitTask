@@ -6,7 +6,7 @@ export class TodoList extends Component {
     constructor(props){
         super(props)
         this.state = {
-            todos: this.props.todos.map(todo => <Todo key={todo.id} id={todo.id} content={todo.text} checked={todo.completed} />),
+            todos: this.props.todos.map(todo => <Todo key={todo.id} id={todo.id} user={this.props.user.user} content={todo.text} checked={todo.completed} />),
             newTodo: ''
             //     id: this.props.todos.length,
             //     text: '',
@@ -27,7 +27,7 @@ export class TodoList extends Component {
         e.preventDefault()
         let id = this.state.todos.length+1 
         // console.log(id)
-        let newTodo = <Todo key={id} id={id} content={this.state.newTodo} checked={false} />
+        let newTodo = <Todo key={id} id={id} user={this.props.user.user} content={this.state.newTodo} checked={false} />
         this.setState((prevState) => {
             prevState.todos.push(newTodo)
             return {
@@ -41,7 +41,7 @@ export class TodoList extends Component {
         }
         console.log(todo)
         // console.log(this.state.newTodo)
-        this.props.addNewTodo(todo)
+        this.props.addNewTodo(todo, this.props.user.user)
     }
 
 
@@ -64,14 +64,21 @@ export class TodoList extends Component {
     }
 }
 
-const mapStateToProps = (state)=>{
-    return {
-        todos: state.todo.todos
+const mapStateToProps = (state)=>{    
+    if (state.auth.user.email in state.todo.todos){
+        return {
+            todos: state.todo.todos[state.auth.user.email]
+        }
+    }else{
+        return{
+            todos: []
+        }
     }
+    
 }
 const mapDispatchToProps = (dispatch)=>{
     return {
-        addNewTodo: (todo) => dispatch({type: 'ADD_TODO', todo}),
+        addNewTodo: (todo, user) => dispatch({type: 'ADD_TODO', todo, user}),
     }
 }
 
