@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+
 
 export class SignIn extends Component {
     constructor(props) {
@@ -7,24 +9,25 @@ export class SignIn extends Component {
         this.state={
             email:'',
             password: '', 
-            authError: null
+            isAuthenticated: this.props.auth.isAuthenticated,
+            authError: this.props.auth.authError
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
     handleSubmit(e){
         e.preventDefault()
-        this.setState({
-            authError: null
-        })
-        this.props.login(this.state.email, this.state.password)
-        if (this.props.auth.authError){
+        this.props.login(this.state.email, this.state.password)        
+        if(this.props.auth.authError === null){
+            this.setState({
+                isAuthenticated: true,
+                authError: null
+            })
+        }else{
             this.setState({
                 authError: this.props.auth.authError
             })
-        }else{
-            this.props.history.push('/')
-        }        
+        }
     }
     handleChange(e){
         this.setState({
@@ -32,11 +35,11 @@ export class SignIn extends Component {
         })
     }
     render() {
-
         return (
             
             <div className='container'>
                 <form className='white' onSubmit={this.handleSubmit}>
+                    {this.state.isAuthenticated ? <Redirect to='/' />: null}
                     { this.state.authError ? <p className='red'>{this.state.authError}</p>: null}
                     <div className='input-field'>
                         <label htmlFor='email'>Email</label>

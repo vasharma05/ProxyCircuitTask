@@ -23,6 +23,7 @@ const authReducer = (state=user, action) => {
             }else if(user.password === action.password){
                 state.user = user
                 state.isAuthenticated = true
+                state.authError= null
                 return state
             }else{
                 state.authError = 'Password Mismatch'
