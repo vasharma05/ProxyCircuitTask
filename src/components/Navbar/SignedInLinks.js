@@ -19,7 +19,7 @@ export class SignedInLinks extends Component {
             <Fragment>
             {this.state.redirect ? <Redirect to='/' />: null}
                 <li><NavLink to='/'>{this.props.user.name}</NavLink></li>
-                <li><p onClick={this.logout.bind(this)}>Log Out</p> </li>
+                <li><NavLink to='' onClick={this.logout.bind(this)}>Log Out</NavLink> </li>
             </Fragment>
         )
     }
