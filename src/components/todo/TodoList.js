@@ -20,13 +20,11 @@ export class TodoList extends Component {
         this.setState({
             newTodo: e.target.value
         })
-        // console.log(this.state.newTodo)
 
     }
     handleSubmit(e){
         e.preventDefault()
         let id = this.state.todos.length+1 
-        // console.log(id)
         let newTodo = <Todo key={id} id={id} user={this.props.user.user} content={this.state.newTodo} checked={false} />
         this.setState((prevState) => {
             prevState.todos.push(newTodo)
@@ -39,14 +37,11 @@ export class TodoList extends Component {
             text: this.state.newTodo,
             completed: false
         }
-        console.log(todo)
-        // console.log(this.state.newTodo)
         this.props.addNewTodo(todo, this.props.user.user)
     }
 
 
     render() {
-        console.log(this.props.todos)
         return (
             <div className='container'>
                 <div id='todo-list' className='center'> 

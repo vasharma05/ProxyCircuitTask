@@ -13,12 +13,10 @@ export class Todo extends Component {
         this.setState({
             checked: e.target.checked,
         })
-        console.log(this.props.id, !this.state.checked, this.props.user.email);
         
         this.props.completed(this.props.id, !this.state.checked,this.props.user.email)
     }
     render() {
-        console.log(this.props.id)
         return (
             <p>
                 <label>

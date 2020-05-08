@@ -1,11 +1,7 @@
 const user = {
     authError: null,
-    isAuthenticated: true,
-    user: {
-        name: 'Vineet Sharma',
-        email: 'sharmava05@gmail.com',
-        password: 'Vin1234' 
-    }
+    isAuthenticated: false,
+    user: null
 }
 const initState = {
     users:[
@@ -21,7 +17,6 @@ const authReducer = (state=user, action) => {
     switch(action.type){
         case 'LOGIN_USER':
             let user = initState.users.find(user =>user.email === action.email )
-            console.log(user)
             if (user === undefined){
                 state.authError = 'No User Found'
                 return state
@@ -46,7 +41,6 @@ const authReducer = (state=user, action) => {
             state.user = null
             state.isAuthenticated = false 
             // state.history.push('/')
-            console.log('sdsd')
             return state
         default:
             break

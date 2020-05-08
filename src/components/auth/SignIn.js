@@ -14,15 +14,16 @@ export class SignIn extends Component {
     }
     handleSubmit(e){
         e.preventDefault()
+        this.setState({
+            authError: null
+        })
         this.props.login(this.state.email, this.state.password)
-        console.log('ath',this.state.password, this.state.email, this.props.auth.authError)
         if (this.props.auth.authError){
             this.setState({
                 authError: this.props.auth.authError
             })
         }else{
             this.props.history.push('/')
-            console.log('Going')
         }        
     }
     handleChange(e){
@@ -31,7 +32,6 @@ export class SignIn extends Component {
         })
     }
     render() {
-        // console.log(this.props)
 
         return (
             
