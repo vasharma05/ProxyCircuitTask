@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import Todo from './Todo'
+import { connect } from 'react-redux'
 
 export class TodoList extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = {
-            todos: [<Todo content='Hello' checked={true} />],
-            newTodo:""
+            todos: this.props.todos.map(todo => <Todo key={todo.id} id={todo.id} content={todo.text} checked={todo.completed} />),
+            newTodo: ''
+            //     id: this.props.todos.length,
+            //     text: '',
+            //     completed: false
+            // }
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -15,19 +20,33 @@ export class TodoList extends Component {
         this.setState({
             newTodo: e.target.value
         })
+        // console.log(this.state.newTodo)
+
     }
     handleSubmit(e){
         e.preventDefault()
-        let todoList = document.querySelector('#todo-list')
-        let newTodo = <Todo content={this.state.newTodo} checked={false} />
+        let id = this.state.todos.length+1 
+        // console.log(id)
+        let newTodo = <Todo key={id} id={id} content={this.state.newTodo} checked={false} />
         this.setState((prevState) => {
             prevState.todos.push(newTodo)
             return {
                 todos: prevState.todos
             }
         })
+        let todo = {
+            id,
+            text: this.state.newTodo,
+            completed: false
+        }
+        console.log(todo)
+        // console.log(this.state.newTodo)
+        this.props.addNewTodo(todo)
     }
+
+
     render() {
+        console.log(this.props.todos)
         return (
             <div className='container'>
                 <div id='todo-list' className='center'> 
@@ -45,4 +64,15 @@ export class TodoList extends Component {
     }
 }
 
-export default TodoList
+const mapStateToProps = (state)=>{
+    return {
+        todos: state.todo.todos
+    }
+}
+const mapDispatchToProps = (dispatch)=>{
+    return {
+        addNewTodo: (todo) => dispatch({type: 'ADD_TODO', todo}),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

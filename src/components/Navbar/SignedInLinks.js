@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter, Route, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export class SignedInLinks extends Component {
     render() {
