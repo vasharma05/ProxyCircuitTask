@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 export class SignUp extends Component {
     constructor(props) {
@@ -13,11 +14,14 @@ export class SignUp extends Component {
     }
     handleSubmit(e){
         e.preventDefault()
-        console.log(this.state)
+        // console.log(this.state)
+        this.props.signup(this.state)
+        this.props.all_users()
+        this.props.history.push('/')
     }
     handleChange(e){
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.name]: e.target.value
         })
     }
     render() {
@@ -36,10 +40,6 @@ export class SignUp extends Component {
                         <label htmlFor='password'>password</label>
                         <input type='password' name='password' value={this.state.password} onChange={this.handleChange} />
                     </div>
-                    <div className='input-field'>
-                        <label htmlFor='confirmPassword'>Confirm Password</label>
-                        <input type='password' name='confirmPassword' onChange={this.handleChange} />
-                    </div>
                     <button className='btn'>Sign In</button>
                 </form>
             </div>
@@ -47,4 +47,11 @@ export class SignUp extends Component {
     }
 }
 
-export default SignUp
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        signup: (user) => dispatch({type: 'REGISTER_USER',user}),
+        all_users: () => dispatch({type: 'ALL_USERS'})
+    }
+}
+
+export default connect(null,mapDispatchToProps)(SignUp)
